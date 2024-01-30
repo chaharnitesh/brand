@@ -31,7 +31,7 @@
            
 
             // Use AJAX to send parameters to the backend
-            const apiUrl = "http://lhost.ciphercode.co:8000/api/v1/authentication/";
+            const apiUrl = "https://demobrand.ciphercode.co/api/v1/authentication/";
             const xhr = new XMLHttpRequest();
 
             xhr.onreadystatechange = function() {
@@ -59,7 +59,7 @@
 
             // Send the parameters as JSON in the request body
             const requestBody = JSON.stringify({
-                serial: serial,
+                serial_number: serial,
                 timestamp: timestamp,
                 signature: signature,
     
