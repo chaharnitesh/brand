@@ -3,11 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch Query Parameters with AJAX</title>
+    <title>Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Fetching Query Parameterss</h1>
+    <h1>Brandwise API</h1>
+    <div class="card product-details">
+        <h2>Product Details</h2>
+        <ul>
+            <li><strong>Serial Number:</strong> <span id="sr_number"></span></li>
+            <li><strong>manufacturing_unit:</strong> <span id="manufacturing_unit"></span></li>
+            <li><strong>Manufacturing Date:</strong> <span id="manufacturing_date"></span></li>
+            <li><strong>Expiry Date:</strong> <span id="expiry"></span></li>
+            <li><strong>Destination Market:</strong> <span id="destination"></span></li>
+        </ul>
+    </div>
+
+   
+    <div class="card">
+        <p style="color: red;"> <span id="response"></span></p>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -38,6 +82,8 @@
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     const responseData = JSON.parse(xhr.responseText);
                     console.log("Backend Response:", xhr.status);
+                    const prodInfo = responseData.prod_info;
+        
                     if (xhr.status === 200) {
                         // Handle successful response from the backend
                         console.log("Backend Response:", responseData);
@@ -45,11 +91,18 @@
                         // Display success or error message to the user
                 
                         alert(responseData.message);
+                       
+                        document.getElementById('sr_number').innerText = prodInfo.sr_number || 'N/A';
+                        document.getElementById('manufacturing_unit').innerText = prodInfo.manufacturing_unit || 'N/A';
+                        document.getElementById('manufacturing_date').innerText = prodInfo.manufacturing_date || 'N/A';
+                        document.getElementById('expiry').innerText = prodInfo.expiry_date || 'N/A';
+                        document.getElementById('destination').innerText = prodInfo.destination_market || 'N/A';
                         
                     } else {
                         // Handle errors from the backend
+                        document.getElementById('response').innerText = responseData.message
                         console.log("Error fetching data from backend. Status:",responseData.message)
-                        alert(responseData.message);
+                       
                     }
                 }
             };
