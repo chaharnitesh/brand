@@ -27,6 +27,7 @@
         ul {
             list-style-type: none;
             padding: 0;
+            
         }
 
         li {
@@ -37,7 +38,7 @@
 <body>
 
     <h1>Brandwise API</h1>
-    <div class="card product-details">
+    <div class="card product-details" style="display: none;" id="product">
         <h2>Product Details</h2>
         <ul>
             <li><strong>Serial Number:</strong> <span id="sr_number"></span></li>
@@ -49,8 +50,8 @@
     </div>
 
    
-    <div class="card">
-        <p style="color: red;"> <span id="response"></span></p>
+    <div class="card" style="display: none;" id="emessage">
+        <p style="color: red; text-align: center;"> <span id="response"></span></p>
     </div>
 
     <script>
@@ -66,15 +67,10 @@
             const timestamp = urlParams.get('timestamp');
            
             const signature = urlParams.get('signature');
-           
-
-            // Display the extracted parameters (for demonstration purposes)
+        
             console.log("Serial:", serial);
             console.log("timestamp:", timestamp);
             console.log("Signature:", signature);
-           
-
-            // Use AJAX to send parameters to the backend
             const apiUrl = "https://demobrand.ciphercode.co/api/v1/authentication/";
             const xhr = new XMLHttpRequest();
 
@@ -88,10 +84,7 @@
                         // Handle successful response from the backend
                         console.log("Backend Response:", responseData);
 
-                        // Display success or error message to the user
-                
-                        alert(responseData.message);
-                       
+                        document.getElementById('product').style.display = "block";
                         document.getElementById('sr_number').innerText = prodInfo.sr_number || 'N/A';
                         document.getElementById('manufacturing_unit').innerText = prodInfo.manufacturing_unit || 'N/A';
                         document.getElementById('manufacturing_date').innerText = prodInfo.manufacturing_date || 'N/A';
@@ -100,6 +93,7 @@
                         
                     } else {
                         // Handle errors from the backend
+                        document.getElementById('emessage').style.display = "block";
                         document.getElementById('response').innerText = responseData.message
                         console.log("Error fetching data from backend. Status:",responseData.message)
                        
